@@ -28,22 +28,22 @@ public interface BlockEntityRenderCondition {
         if (config.signTextRendering.equals("all")) {
             return true;
         }
-        double playerDistance = MinecraftClient.getInstance().player.getBlockPos().getSquaredDistance(entity.getPos());
+        double cameraDistance = MinecraftClient.getInstance().cameraEntity.getBlockPos().getSquaredDistance(entity.getPos());
         if (config.signTextRendering.equals("smart")) {
             SignRenderManager.renderedSigns++;
-            return playerDistance < 80 + Math.max(0, 580 - (SignRenderManager.getRenderedSignAmount() * 0.7));
+            return cameraDistance < 80 + Math.max(0, 580 - (SignRenderManager.getRenderedSignAmount() * 0.7));
         }
         double dist = SignBlockEntityRenderAccessor.enhanced_bes$getRenderDistance();
         Vec3d blockPos = Vec3d.ofCenter(entity.getPos());
-        Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
+        Vec3d cameraPos = MinecraftClient.getInstance().cameraEntity.getPos();
         if (config.signTextRendering.equals("most")) {
-            return blockPos.isInRange(playerPos, dist * 0.6);
+            return blockPos.isInRange(cameraPos, dist * 0.6);
         }
         if (config.signTextRendering.equals("some")) {
-            return blockPos.isInRange(playerPos, dist * 0.3);
+            return blockPos.isInRange(cameraPos, dist * 0.3);
         }
         if (config.signTextRendering.equals("few")) {
-            return blockPos.isInRange(playerPos, dist * 0.15);
+            return blockPos.isInRange(cameraPos, dist * 0.15);
         }
         return false;
     };
